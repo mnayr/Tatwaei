@@ -17,9 +17,7 @@ class _CoordinatorSignupPageState extends State<CoordinatorSignupPage> {
   List<String> instituteOption = ['A', 'B', 'C', 'D'];
   String? _selectedInstitute;
 
-  List<String> gradeOption = ['1', '2', '3', '4'];
-  String? _selectedgrade;
-  final TextEditingController nameContr = TextEditingController();
+  final TextEditingController locationContr = TextEditingController();
   final TextEditingController gradeContr = TextEditingController();
   final TextEditingController phoneContr = TextEditingController();
   final TextEditingController mailContr = TextEditingController();
@@ -53,26 +51,6 @@ class _CoordinatorSignupPageState extends State<CoordinatorSignupPage> {
                     instituteOption: instituteOption),
                 SizedBox(height: Get.height * 0.02),
                 CommonField(
-                  controller: nameContr,
-                  prefixIcon: 'assets/icons/person.png',
-                  onChanged: (value) {},
-                  validator: (value) {
-                    return '';
-                  },
-                  title: 'الاسم',
-                ),
-                SizedBox(height: Get.height * 0.02),
-                Align(
-                    alignment: Alignment.topRight,
-                    child: Text(
-                      'الصف الدراسي',
-                      style: FontStyles.textFieldText,
-                    )),
-                CustomDropDown(
-                    selectedInstitute: _selectedgrade,
-                    instituteOption: gradeOption),
-                SizedBox(height: Get.height * 0.02),
-                CommonField(
                   controller: phoneContr,
                   prefixIcon: 'assets/icons/call-phone.png',
                   onChanged: (value) {},
@@ -80,6 +58,16 @@ class _CoordinatorSignupPageState extends State<CoordinatorSignupPage> {
                     return '';
                   },
                   title: 'رقم الهاتف',
+                ),
+                SizedBox(height: Get.height * 0.02),
+                CommonField(
+                  controller: locationContr,
+                  prefixIcon: 'assets/icons/pin.png',
+                  onChanged: (value) {},
+                  validator: (value) {
+                    return '';
+                  },
+                  title: 'العنوان',
                 ),
                 SizedBox(height: Get.height * 0.02),
                 CommonField(
