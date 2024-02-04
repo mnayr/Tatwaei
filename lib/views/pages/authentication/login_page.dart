@@ -65,7 +65,7 @@ class LoginPage extends StatelessWidget {
                     SizedBox(height: Get.height * 0.05),
                     CommonButton(
                       onTap: () {
-                        if (mailContr.text == 'student' &&
+                        if (mailContr.text == 'student@gmail.com' &&
                             passContr.text == '123456') {
                           print('pressed');
                           Get.offAll(() => HomePage());
