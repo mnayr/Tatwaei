@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tatwei/constants/colors.dart';
 import 'package:tatwei/constants/font_style.dart';
 import 'package:tatwei/views/pages/authentication/student_signup_page.dart';
-import 'package:tatwei/views/pages/coordinator_signup_page.dart';
+import 'package:tatwei/views/pages/authentication/coordinator_signup_page.dart';
+import 'package:tatwei/views/pages/student_panel/home/home_page.dart';
 import 'package:tatwei/views/widgets/common_button.dart';
 import 'package:tatwei/views/widgets/common_field.dart';
 
@@ -64,7 +64,15 @@ class LoginPage extends StatelessWidget {
                     ),
                     SizedBox(height: Get.height * 0.05),
                     CommonButton(
-                      onTap: () {},
+                      onTap: () {
+                        if (mailContr.text == 'student' &&
+                            passContr.text == '123456') {
+                          print('pressed');
+                          Get.offAll(() => HomePage());
+                        } else {
+                          Get.snackbar('Error', 'Enter correct credentials');
+                        }
+                      },
                       text: 'تسجيل الدخول',
                       backgroundColor: const Color(0xff0C5579),
                     ),
@@ -111,7 +119,7 @@ class LoginPage extends StatelessWidget {
                 ),
                 const SizedBox(height: 15),
                 CommonButton(
-                  onTap: () => Get.to(() => CoordinatorSignupPage()),
+                  onTap: () => Get.to(() => const CoordinatorSignupPage()),
                   text: 'انشاء حساب مدرسة',
                   backgroundColor: const Color(0xff0C5579),
                 ),

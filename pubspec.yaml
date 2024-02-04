@@ -38,6 +38,8 @@ dependencies:
   get: ^4.6.6
   google_fonts: ^6.1.0
   flutter_svg: ^2.0.9
+  awesome_dialog: ^3.2.0
+  msh_checkbox: ^2.0.1
 
 dev_dependencies:
   flutter_test:
