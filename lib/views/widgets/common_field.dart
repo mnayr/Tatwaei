@@ -13,6 +13,7 @@ class CommonField extends StatelessWidget {
     required this.validator,
     this.isObscure = false,
     required this.title,
+    this.isShowPrefix = true,
   });
   final TextEditingController controller;
   final String prefixIcon;
@@ -20,6 +21,7 @@ class CommonField extends StatelessWidget {
   final String? Function(String?)? validator;
   bool isObscure;
   final String title;
+  bool isShowPrefix;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -35,7 +37,7 @@ class CommonField extends StatelessWidget {
           textDirection: TextDirection.rtl,
           decoration: InputDecoration(
             hintTextDirection: TextDirection.rtl,
-            suffixIcon: Image.asset(prefixIcon),
+            suffixIcon: isShowPrefix ? Image.asset(prefixIcon) : null,
             contentPadding: const EdgeInsets.only(right: 10),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(9),

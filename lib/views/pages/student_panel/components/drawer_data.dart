@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tatwei/constants/colors.dart';
+import 'package:tatwei/views/pages/student_panel/student_info/student_info_page.dart';
 import 'package:tatwei/views/widgets/drawer_tile.dart';
 
 class DrawerData extends StatelessWidget {
@@ -33,7 +34,7 @@ class DrawerData extends StatelessWidget {
             ),
             SizedBox(height: Get.height * 0.06),
             DrawerTile(
-              onTap: () {},
+              onTap: () => Get.to(() => StudentInfoPage()),
               title: 'حسابي',
               iconImage: '',
             ),

@@ -1,18 +1,10 @@
-import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:msh_checkbox/msh_checkbox.dart';
 import 'package:tatwei/constants/colors.dart';
 import 'package:tatwei/model/oppertunity_model.dart';
-import 'package:tatwei/model/search_model.dart';
 import 'package:tatwei/views/pages/student_panel/components/drawer_data.dart';
-import 'package:tatwei/views/pages/student_panel/home/components/aljins_search_data.dart';
-import 'package:tatwei/views/pages/student_panel/home/components/almajaal_search_data.dart';
-import 'package:tatwei/views/pages/student_panel/home/components/almakaan_search_data.dart';
 import 'package:tatwei/views/pages/student_panel/home/components/apply_filter_button.dart';
-import 'package:tatwei/views/pages/student_panel/home/components/filter_button.dart';
 import 'package:tatwei/views/pages/student_panel/home/components/search_field.dart';
 
 class HomePage extends StatefulWidget {
@@ -32,6 +24,18 @@ class _HomePageState extends State<HomePage> {
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(70.0),
         child: AppBar(
+          leading: Builder(builder: (BuildContext context) {
+            return IconButton(
+              icon: const Icon(
+                Icons.menu,
+                size: 40,
+              ),
+              onPressed: () {
+                Scaffold.of(context).openDrawer();
+              },
+              tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
+            );
+          }),
           shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.vertical(
               bottom: Radius.circular(10),
