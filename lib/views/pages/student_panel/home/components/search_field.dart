@@ -16,6 +16,7 @@ class SearchField extends StatelessWidget {
         children: [
           Expanded(
             child: TextFormField(
+              textDirection: TextDirection.rtl,
               decoration: InputDecoration(
                 prefixIcon: Padding(
                   padding: const EdgeInsets.all(12.0),

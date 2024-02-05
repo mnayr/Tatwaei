@@ -72,10 +72,12 @@ class _HomePageState extends State<HomePage> {
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Container(
-                                      width: Get.width * 0.6,
-                                      padding: const EdgeInsets.all(10),
+                                      // width: Get.width * 0.6,
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 15, vertical: 10),
                                       decoration: BoxDecoration(
                                         color: ColorClass.darkGreenColor
                                             .withOpacity(.5),

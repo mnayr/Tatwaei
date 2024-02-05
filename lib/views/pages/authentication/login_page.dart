@@ -67,8 +67,7 @@ class LoginPage extends StatelessWidget {
                       onTap: () {
                         if (mailContr.text == 'student@gmail.com' &&
                             passContr.text == '123456') {
-                          print('pressed');
-                          Get.offAll(() => HomePage());
+                          Get.offAll(() => const HomePage());
                         } else {
                           Get.snackbar('Error', 'Enter correct credentials');
                         }
