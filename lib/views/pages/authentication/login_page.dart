@@ -65,12 +65,13 @@ class LoginPage extends StatelessWidget {
                     SizedBox(height: Get.height * 0.05),
                     CommonButton(
                       onTap: () {
-                        if (mailContr.text == 'student@gmail.com' &&
-                            passContr.text == '123456') {
-                          Get.offAll(() => const HomePage());
-                        } else {
-                          Get.snackbar('Error', 'Enter correct credentials');
-                        }
+                        Get.offAll(() => const HomePage());
+                        // if (mailContr.text == 'student@gmail.com' &&
+                        //     passContr.text == '123456') {
+                        //   Get.offAll(() => const HomePage());
+                        // } else {
+                        //   Get.snackbar('Error', 'Enter correct credentials');
+                        // }
                       },
                       text: 'تسجيل الدخول',
                       backgroundColor: const Color(0xff0C5579),

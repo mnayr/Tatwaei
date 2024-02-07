@@ -6,6 +6,7 @@ import 'package:tatwei/model/oppertunity_model.dart';
 import 'package:tatwei/views/pages/student_panel/components/drawer_data.dart';
 import 'package:tatwei/views/pages/student_panel/home/components/apply_filter_button.dart';
 import 'package:tatwei/views/pages/student_panel/home/components/search_field.dart';
+import 'package:tatwei/views/pages/student_panel/home/home_detail_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -102,9 +103,13 @@ class _HomePageState extends State<HomePage> {
                                             MainAxisAlignment.spaceEvenly,
                                         children: [
                                           ApplyFilterButton(
-                                              title: 'خدمية', onTap: () {}),
+                                              title: 'خدمية',
+                                              onTap: () => Get.to(
+                                                  () => HomeDetailPage())),
                                           ApplyFilterButton(
-                                              title: 'داخلية', onTap: () {}),
+                                              title: 'داخلية',
+                                              onTap: () => Get.to(
+                                                  () => HomeDetailPage())),
                                         ],
                                       ),
                                     ),
