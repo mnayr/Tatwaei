@@ -47,7 +47,7 @@ class _AlmaqtamlahPageState extends State<AlmaqtamlahPage> {
                                     Container(
                                       // width: Get.width * 0.6,
                                       padding: const EdgeInsets.symmetric(
-                                          horizontal: 15, vertical: 10),
+                                          horizontal: 15, vertical: 0),
                                       decoration: BoxDecoration(
                                         color: ColorClass.darkGreenColor
                                             .withOpacity(.5),

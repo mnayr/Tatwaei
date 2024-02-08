@@ -85,7 +85,7 @@ class _SaatiPageState extends State<SaatiPage> {
                   Container(
                     padding: const EdgeInsets.all(16),
                     decoration: BoxDecoration(
-                      color: ColorClass.darkGreenColor.withOpacity(.3),
+                      color: ColorClass.primaryColor,
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: Column(
@@ -152,109 +152,99 @@ class _SaatiPageState extends State<SaatiPage> {
                       itemBuilder: (context, index) {
                         return Padding(
                           padding: const EdgeInsets.symmetric(vertical: 5),
-                          child: Container(
-                            padding: const EdgeInsets.all(10),
-                            decoration: BoxDecoration(
-                              color: ColorClass.darkGreenColor.withOpacity(.3),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 5, vertical: 8),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: ColorClass.primaryColor,
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                child: Row(
-                                  children: [
-                                    Image.asset(
-                                      oppeertunityList[index].image,
-                                      height: 55,
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Container(
-                                            // width: Get.width * 0.6,
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 15, vertical: 10),
-                                            decoration: BoxDecoration(
-                                              color: ColorClass.darkGreenColor
-                                                  .withOpacity(.5),
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                            ),
-                                            child: Text(
-                                              oppeertunityList[index].title,
-                                              style: GoogleFonts.inter(
-                                                  fontSize: 18,
-                                                  fontWeight:
-                                                      FontWeight.normal),
-                                            ),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 5, vertical: 8),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: ColorClass.primaryColor,
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: Row(
+                                children: [
+                                  Image.asset(
+                                    oppeertunityList[index].image,
+                                    height: 55,
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Container(
+                                          // width: Get.width * 0.6,
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 15, vertical: 0),
+                                          decoration: BoxDecoration(
+                                            color: ColorClass.darkGreenColor
+                                                .withOpacity(.5),
+                                            borderRadius:
+                                                BorderRadius.circular(10),
                                           ),
-                                          SizedBox(height: Get.height * 0.02),
-                                          SizedBox(
-                                            width: Get.width * 0.6,
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.end,
-                                              children: [
-                                                GestureDetector(
-                                                  onTap: () {
-                                                    setState(() {
-                                                      isShowPopUP = true;
-                                                      print(
-                                                          'value$isShowPopUP');
-                                                    });
-                                                  },
-                                                  child: Container(
-                                                    padding: const EdgeInsets
-                                                        .symmetric(
-                                                        vertical: 5,
-                                                        horizontal: 15),
-                                                    decoration: BoxDecoration(
-                                                      color: ColorClass
-                                                          .darkGreenColor
-                                                          .withOpacity(.5),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              40),
-                                                    ),
-                                                    child: Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        const Icon(
-                                                          Icons.remove_red_eye,
-                                                          color: Colors.black,
-                                                        ),
-                                                        Text(
-                                                          'عرض الشهادة',
-                                                          style:
-                                                              GoogleFonts.inter(
-                                                                  fontSize: 10,
-                                                                  color: Colors
-                                                                      .black),
-                                                        )
-                                                      ],
-                                                    ),
+                                          child: Text(
+                                            oppeertunityList[index].title,
+                                            style: GoogleFonts.inter(
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.normal),
+                                          ),
+                                        ),
+                                        SizedBox(height: Get.height * 0.02),
+                                        SizedBox(
+                                          width: Get.width * 0.67,
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.end,
+                                            children: [
+                                              GestureDetector(
+                                                onTap: () {
+                                                  setState(() {
+                                                    isShowPopUP = true;
+                                                    print('value$isShowPopUP');
+                                                  });
+                                                },
+                                                child: Container(
+                                                  padding: const EdgeInsets
+                                                      .symmetric(
+                                                      vertical: 5,
+                                                      horizontal: 15),
+                                                  decoration: BoxDecoration(
+                                                    color: ColorClass
+                                                        .darkGreenColor
+                                                        .withOpacity(.5),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            40),
+                                                  ),
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.start,
+                                                    children: [
+                                                      const Icon(
+                                                        Icons.remove_red_eye,
+                                                        color: Colors.black,
+                                                      ),
+                                                      Text(
+                                                        'عرض الشهادة',
+                                                        style:
+                                                            GoogleFonts.inter(
+                                                                fontSize: 10,
+                                                                color: Colors
+                                                                    .black),
+                                                      )
+                                                    ],
                                                   ),
                                                 ),
-                                              ],
-                                            ),
+                                              ),
+                                            ],
                                           ),
-                                        ],
-                                      ),
+                                        ),
+                                      ],
                                     ),
-                                  ],
-                                ),
+                                  ),
+                                ],
                               ),
                             ),
                           ),

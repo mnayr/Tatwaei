@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tatwei/constants/colors.dart';
 import 'package:tatwei/constants/font_style.dart';
+import 'package:tatwei/views/pages/admin_panel/admin_home/admin_home_page.dart';
 import 'package:tatwei/views/pages/authentication/student_signup_page.dart';
 import 'package:tatwei/views/pages/authentication/coordinator_signup_page.dart';
 import 'package:tatwei/views/pages/student_panel/home/home_page.dart';
@@ -65,13 +66,13 @@ class LoginPage extends StatelessWidget {
                     SizedBox(height: Get.height * 0.05),
                     CommonButton(
                       onTap: () {
-                        Get.offAll(() => const HomePage());
-                        // if (mailContr.text == 'student@gmail.com' &&
-                        //     passContr.text == '123456') {
-                        //   Get.offAll(() => const HomePage());
-                        // } else {
-                        //   Get.snackbar('Error', 'Enter correct credentials');
-                        // }
+                        if (mailContr.text == 'student@gmail.com' &&
+                            passContr.text == '123456') {
+                          Get.offAll(() => const HomePage());
+                        } else if (mailContr.text == 'admin@gmail.com' &&
+                            passContr.text == '123456') {
+                          Get.offAll(() => AdminHomePage());
+                        }
                       },
                       text: 'تسجيل الدخول',
                       backgroundColor: const Color(0xff0C5579),

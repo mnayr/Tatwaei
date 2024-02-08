@@ -37,7 +37,7 @@ class AlhaaliaPage extends StatelessWidget {
                                 Container(
                                   // width: Get.width * 0.6,
                                   padding: const EdgeInsets.symmetric(
-                                      horizontal: 15, vertical: 10),
+                                      horizontal: 15, vertical: 0),
                                   decoration: BoxDecoration(
                                     color: ColorClass.darkGreenColor
                                         .withOpacity(.5),
@@ -54,11 +54,11 @@ class AlhaaliaPage extends StatelessWidget {
                                 SizedBox(
                                   width: Get.width * 0.6,
                                   child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
+                                    mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
                                       ApplyFilterButton(
                                           title: 'خدمية', onTap: () {}),
+                                      SizedBox(width: Get.width * 0.02),
                                       ApplyFilterButton(
                                           title: 'داخلية', onTap: () {}),
                                     ],
