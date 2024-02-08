@@ -67,61 +67,67 @@ class _AdminHomePageState extends State<AdminHomePage> {
                   return Padding(
                     padding:
                         const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: ColorClass.primaryColor,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Row(
-                        children: [
-                          Image.asset(oppeertunityList[index].image),
-                          Column(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Container(
-                                      // width: Get.width * 0.6,
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 15, vertical: 10),
-                                      decoration: BoxDecoration(
-                                        color: ColorClass.darkGreenColor
-                                            .withOpacity(.5),
-                                        borderRadius: BorderRadius.circular(10),
+                    child: GestureDetector(
+                      onTap: () {
+                        Get.to(() => const AdminHomeDetailPage());
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: ColorClass.primaryColor,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Row(
+                          children: [
+                            Image.asset(oppeertunityList[index].image),
+                            Column(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Container(
+                                        // width: Get.width * 0.6,
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 15, vertical: 0),
+                                        decoration: BoxDecoration(
+                                          color: ColorClass.darkGreenColor
+                                              .withOpacity(.5),
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                        ),
+                                        child: Text(
+                                          oppeertunityList[index].title,
+                                          style: GoogleFonts.inter(
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.normal),
+                                        ),
                                       ),
-                                      child: Text(
-                                        oppeertunityList[index].title,
-                                        style: GoogleFonts.inter(
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.normal),
+                                      SizedBox(height: Get.height * 0.02),
+                                      SizedBox(
+                                        width: Get.width * 0.6,
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          children: [
+                                            ApplyFilterButton(
+                                                title: 'خدمية', onTap: () {}),
+                                            SizedBox(width: Get.width * 0.02),
+                                            ApplyFilterButton(
+                                                title: 'داخلية',
+                                                onTap: () => Get.to(() =>
+                                                    const AdminHomeDetailPage())),
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                    SizedBox(height: Get.height * 0.02),
-                                    SizedBox(
-                                      width: Get.width * 0.6,
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceEvenly,
-                                        children: [
-                                          ApplyFilterButton(
-                                              title: 'خدمية',
-                                              onTap: () => Get.to(() =>
-                                                  const AdminHomeDetailPage())),
-                                          ApplyFilterButton(
-                                              title: 'داخلية',
-                                              onTap: () => Get.to(() =>
-                                                  const AdminHomeDetailPage())),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            ],
-                          ),
-                        ],
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   );

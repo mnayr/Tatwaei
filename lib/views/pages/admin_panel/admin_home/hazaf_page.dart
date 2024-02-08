@@ -6,8 +6,8 @@ import 'package:tatwei/constants/colors.dart';
 import 'package:tatwei/views/pages/admin_panel/admin_home/hazaf_page.dart';
 import 'package:tatwei/views/pages/admin_panel/admin_home/taadeel_page.dart';
 
-class AdminEditHomeDetailPage extends StatelessWidget {
-  const AdminEditHomeDetailPage({super.key});
+class HazafPage extends StatelessWidget {
+  const HazafPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -181,50 +181,71 @@ class AdminEditHomeDetailPage extends StatelessWidget {
                               color: Colors.black, fontSize: 16),
                         ),
                         const SizedBox(height: 20),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              GestureDetector(
-                                onTap: () {
-                                  Get.to(() => TaadeelPage());
-                                },
-                                child: Container(
-                                  height: 35,
-                                  width: 98,
-                                  decoration: BoxDecoration(
-                                    color: ColorClass.darkGreenColor,
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  child: Center(
-                                    child: Text(
-                                      'تعديل',
-                                      style: GoogleFonts.inter(
-                                          color: Colors.white, fontSize: 20),
-                                    ),
-                                  ),
+                        Align(
+                          alignment: Alignment.topLeft,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  'حفظ الحذف ؟',
+                                  style: GoogleFonts.inter(
+                                      color: ColorClass.darkGreenColor,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20),
                                 ),
-                              ),
-                              GestureDetector(
-                                onTap: () => Get.to(() => HazafPage()),
-                                child: Container(
-                                  height: 35,
-                                  width: 98,
-                                  decoration: BoxDecoration(
-                                    color: ColorClass.darkGreenColor,
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  child: Center(
-                                    child: Text(
-                                      'حذف',
-                                      style: GoogleFonts.inter(
-                                          color: Colors.white, fontSize: 20),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    GestureDetector(
+                                      onTap: () {
+                                        Get.to(() => TaadeelPage());
+                                      },
+                                      child: Container(
+                                        height: 35,
+                                        width: 98,
+                                        decoration: BoxDecoration(
+                                          color: ColorClass.darkGreenColor,
+                                          borderRadius:
+                                              BorderRadius.circular(40),
+                                        ),
+                                        child: Center(
+                                          child: Text(
+                                            'حفظ',
+                                            style: GoogleFonts.inter(
+                                                color: Colors.white,
+                                                fontSize: 20),
+                                          ),
+                                        ),
+                                      ),
                                     ),
-                                  ),
+                                    SizedBox(height: Get.height * 0.02),
+                                    GestureDetector(
+                                      onTap: () => Get.to(() => HazafPage()),
+                                      child: Container(
+                                        height: 35,
+                                        width: 98,
+                                        decoration: BoxDecoration(
+                                          color: ColorClass.darkGreenColor,
+                                          borderRadius:
+                                              BorderRadius.circular(40),
+                                        ),
+                                        child: Center(
+                                          child: Text(
+                                            'الغاء',
+                                            style: GoogleFonts.inter(
+                                                color: Colors.white,
+                                                fontSize: 20),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
                       ],
