@@ -136,7 +136,7 @@ class _TeacherStudentDetailPageState extends State<TeacherStudentDetailPage> {
                           width: 116,
                           // padding: const EdgeInsets.all(6),
                           decoration: BoxDecoration(
-                            color: ColorClass.darkGreenColor.withOpacity(.4),
+                            color: ColorClass.darkGreenColor.withOpacity(.2),
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: Center(
@@ -152,7 +152,7 @@ class _TeacherStudentDetailPageState extends State<TeacherStudentDetailPage> {
                   ),
                   SizedBox(height: Get.height * 0.02),
                   Container(
-                    padding: const EdgeInsets.all(10),
+                    padding: const EdgeInsets.all(5),
                     decoration: BoxDecoration(
                       color: ColorClass.primaryColor,
                       borderRadius: BorderRadius.circular(10),
@@ -162,7 +162,7 @@ class _TeacherStudentDetailPageState extends State<TeacherStudentDetailPage> {
                         Row(
                           children: [
                             const CircleAvatar(
-                              radius: 40,
+                              radius: 30,
                               backgroundImage:
                                   AssetImage('assets/images/4.png'),
                             ),
