@@ -3,10 +3,11 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tatwei/constants/colors.dart';
-import 'package:tatwei/views/pages/admin_panel/admin_home/admin_edit_home_detail_page.dart';
+import 'package:tatwei/views/pages/admin_panel/admin_home/hazaf_page.dart';
+import 'package:tatwei/views/pages/admin_panel/admin_home/taadeel_page.dart';
 
-class AdminHomeDetailPage extends StatelessWidget {
-  const AdminHomeDetailPage({super.key});
+class TeacherOppertunityDetailPage extends StatelessWidget {
+  const TeacherOppertunityDetailPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -180,30 +181,50 @@ class AdminHomeDetailPage extends StatelessWidget {
                               color: Colors.black, fontSize: 16),
                         ),
                         const SizedBox(height: 20),
-                        Align(
-                          alignment: Alignment.topLeft,
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: GestureDetector(
-                              onTap: () {
-                                Get.to(() => const AdminEditHomeDetailPage());
-                              },
-                              child: Container(
-                                height: 35,
-                                width: 98,
-                                decoration: BoxDecoration(
-                                  color: ColorClass.darkGreenColor,
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                child: Center(
-                                  child: Text(
-                                    'تحرير',
-                                    style: GoogleFonts.inter(
-                                        color: Colors.white, fontSize: 20),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              GestureDetector(
+                                onTap: () {
+                                  Get.to(() => TaadeelPage());
+                                },
+                                child: Container(
+                                  height: 35,
+                                  width: 98,
+                                  decoration: BoxDecoration(
+                                    color: ColorClass.darkGreenColor,
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: Center(
+                                    child: Text(
+                                      'تعديل',
+                                      style: GoogleFonts.inter(
+                                          color: Colors.white, fontSize: 20),
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
+                              GestureDetector(
+                                onTap: () => Get.to(() => HazafPage()),
+                                child: Container(
+                                  height: 35,
+                                  width: 98,
+                                  decoration: BoxDecoration(
+                                    color: ColorClass.darkGreenColor,
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: Center(
+                                    child: Text(
+                                      'حذف',
+                                      style: GoogleFonts.inter(
+                                          color: Colors.white, fontSize: 20),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ],

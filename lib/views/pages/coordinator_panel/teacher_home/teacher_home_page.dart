@@ -3,25 +3,27 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tatwei/constants/colors.dart';
 import 'package:tatwei/model/oppertunity_model.dart';
+import 'package:tatwei/views/pages/coordinator_panel/components/teacher_drawer_data.dart';
+import 'package:tatwei/views/pages/coordinator_panel/teacher_home/teacher_home_detail_page.dart';
 import 'package:tatwei/views/pages/student_panel/components/drawer_data.dart';
 import 'package:tatwei/views/pages/student_panel/home/components/apply_filter_button.dart';
 import 'package:tatwei/views/pages/student_panel/home/components/search_field.dart';
-import 'package:tatwei/views/pages/student_panel/home/home_detail_page.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+class TeacherHomePage extends StatefulWidget {
+  const TeacherHomePage({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<TeacherHomePage> createState() => _TeacherHomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _TeacherHomePageState extends State<TeacherHomePage> {
   bool isChecked = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      drawer: const DrawerData(),
+      drawer: const TeacherDrawerData(),
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(70.0),
         child: AppBar(
@@ -66,7 +68,7 @@ class _HomePageState extends State<HomePage> {
                         const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
                     child: GestureDetector(
                       onTap: () {
-                        Get.to(() => const HomeDetailPage());
+                        Get.to(() => const TeacherHomeDetailPage());
                       },
                       child: Container(
                         decoration: BoxDecoration(

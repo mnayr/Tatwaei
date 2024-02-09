@@ -3,10 +3,10 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tatwei/constants/colors.dart';
-import 'package:tatwei/views/pages/admin_panel/admin_home/admin_edit_home_detail_page.dart';
+import 'package:tatwei/views/pages/coordinator_panel/teacher_home/oppertunity_detail_page.dart';
 
-class AdminHomeDetailPage extends StatelessWidget {
-  const AdminHomeDetailPage({super.key});
+class TeacherHomeDetailPage extends StatelessWidget {
+  const TeacherHomeDetailPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -186,7 +186,8 @@ class AdminHomeDetailPage extends StatelessWidget {
                             padding: const EdgeInsets.all(8.0),
                             child: GestureDetector(
                               onTap: () {
-                                Get.to(() => const AdminEditHomeDetailPage());
+                                Get.to(
+                                    () => const TeacherOppertunityDetailPage());
                               },
                               child: Container(
                                 height: 35,

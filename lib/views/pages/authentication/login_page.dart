@@ -6,6 +6,7 @@ import 'package:tatwei/constants/font_style.dart';
 import 'package:tatwei/views/pages/admin_panel/admin_home/admin_home_page.dart';
 import 'package:tatwei/views/pages/authentication/student_signup_page.dart';
 import 'package:tatwei/views/pages/authentication/coordinator_signup_page.dart';
+import 'package:tatwei/views/pages/coordinator_panel/teacher_home/teacher_home_page.dart';
 import 'package:tatwei/views/pages/student_panel/home/home_page.dart';
 import 'package:tatwei/views/widgets/common_button.dart';
 import 'package:tatwei/views/widgets/common_field.dart';
@@ -72,6 +73,9 @@ class LoginPage extends StatelessWidget {
                         } else if (mailContr.text == 'admin@gmail.com' &&
                             passContr.text == '123456') {
                           Get.offAll(() => AdminHomePage());
+                        } else if (mailContr.text == 'teacher@gmail.com' &&
+                            passContr.text == '123456') {
+                          Get.offAll(() => TeacherHomePage());
                         }
                       },
                       text: 'تسجيل الدخول',
