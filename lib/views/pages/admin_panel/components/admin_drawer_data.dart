@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tatwei/constants/colors.dart';
+import 'package:tatwei/views/pages/admin_panel/list_of_volunteer/list_of_volunteer_page.dart';
 import 'package:tatwei/views/pages/authentication/login_page.dart';
 import 'package:tatwei/views/widgets/drawer_tile.dart';
 
@@ -34,7 +35,7 @@ class AdminDrawerData extends StatelessWidget {
             ),
             SizedBox(height: Get.height * 0.06),
             DrawerTile(
-              onTap: () {},
+              onTap: () => Get.to(() => ListofVolunteerPage()),
               title: 'فرص التطوع',
               iconImage: '',
             ),
