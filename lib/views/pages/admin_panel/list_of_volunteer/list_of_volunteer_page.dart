@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:tatwei/constants/colors.dart';
 import 'package:tatwei/model/oppertunity_model.dart';
 import 'package:tatwei/views/pages/admin_panel/list_of_volunteer/add_oppertunity_page.dart';
+import 'package:tatwei/views/pages/admin_panel/list_of_volunteer/volunteer_data.dart';
 import 'package:tatwei/views/pages/coordinator_panel/teacher_home/teacher_home_detail_page.dart';
 import 'package:tatwei/views/pages/coordinator_panel/teacher_home/teacher_home_page.dart';
 import 'package:tatwei/views/pages/student_panel/home/components/apply_filter_button.dart';
@@ -58,7 +59,7 @@ class ListofVolunteerPage extends StatelessWidget {
                       onTap: () => Get.back(),
                       child: SvgPicture.asset('assets/icons/back_arrow.svg')),
                   GestureDetector(
-                    onTap: () => Get.to(() => AddOppertunityPage()),
+                    onTap: () => Get.to(() => VolunteerDataPage()),
                     child: Container(
                       height: 33,
                       width: 33,
@@ -85,7 +86,7 @@ class ListofVolunteerPage extends StatelessWidget {
                           horizontal: 0, vertical: 8),
                       child: GestureDetector(
                         onTap: () {
-                          Get.off(() => const TeacherHomeDetailPage());
+                          Get.to(() => const TeacherHomeDetailPage());
                         },
                         child: Container(
                           decoration: BoxDecoration(

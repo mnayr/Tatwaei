@@ -1,5 +1,7 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:tatwei/constants/colors.dart';
 import 'package:tatwei/constants/font_style.dart';
 import 'package:tatwei/views/widgets/common_button.dart';
@@ -22,6 +24,7 @@ class _CoordinatorSignupPageState extends State<CoordinatorSignupPage> {
   final TextEditingController phoneContr = TextEditingController();
   final TextEditingController mailContr = TextEditingController();
   final TextEditingController passContr = TextEditingController();
+  final TextEditingController schoolController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,7 +52,53 @@ class _CoordinatorSignupPageState extends State<CoordinatorSignupPage> {
                 CustomDropDown(
                     selectedInstitute: _selectedInstitute,
                     instituteOption: instituteOption),
-                SizedBox(height: Get.height * 0.02),
+                SizedBox(height: Get.height * 0.01),
+                Align(
+                  alignment: Alignment.topRight,
+                  child: GestureDetector(
+                    onTap: () {
+                      AwesomeDialog(
+                        dialogBackgroundColor: ColorClass.primaryColor,
+                        context: context,
+                        animType: AnimType.scale,
+                        dialogType: DialogType.question,
+                        autoDismiss: true,
+                        btnOk: SizedBox(
+                          height: Get.height * 0.06,
+                          width: Get.width,
+                          child: CommonButton(
+                            text: 'نعم',
+                            backgroundColor: ColorClass.darkGreenColor,
+                            onTap: () {},
+                          ),
+                        ),
+                        body: Column(
+                          children: [
+                            CommonField(
+                              controller: schoolController,
+                              prefixIcon: 'prefixIcon',
+                              onChanged: (value) {},
+                              validator: (value) {
+                                return '';
+                              },
+                              title: 'مدرسة',
+                              isShowPrefix: false,
+                            ),
+                          ],
+                        ),
+                        btnOkOnPress: () {},
+                      ).show();
+                    },
+                    child: Text(
+                      ' لم اجد مدرستي ؟',
+                      style: GoogleFonts.inter(
+                          color: ColorClass.textColor,
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ),
+                SizedBox(height: Get.height * 0.01),
                 CommonField(
                   controller: phoneContr,
                   prefixIcon: 'assets/icons/call-phone.png',
