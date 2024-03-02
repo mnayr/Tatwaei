@@ -2,20 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tatwei/constants/colors.dart';
-import 'package:tatwei/controllers/student_controller.dart';
+import 'package:tatwei/controllers/school_controller.dart';
 import 'package:tatwei/model/registered_and_completed_oppertunitymode;.dart';
 import 'package:tatwei/views/pages/student_panel/home/components/apply_filter_button.dart';
 
-class AlhaaliaPage extends StatelessWidget {
-  const AlhaaliaPage({super.key});
+class StudentRegisteredOpportunity extends StatelessWidget {
+  const StudentRegisteredOpportunity({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         Expanded(
-          child: GetX<StudentController>(
-              init: Get.put(StudentController()),
+          child: GetX<SchoolController>(
+              init: Get.put(SchoolController()),
               builder: (cont) {
                 return ListView.builder(
                   itemCount: cont.getregisteredOpportunityListList.length,

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1027291413694",
+    "project_id": "tatwaei-42bca",
+    "storage_bucket": "tatwaei-42bca.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1027291413694:android:e89303bc8632d5a8f7f2ef",
+        "android_client_info": {
+          "package_name": "com.example.tatwei"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBoPb3fmNUPjVq-zDt9jBtmZdBduRndxgI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

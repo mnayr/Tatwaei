@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tatwei/constants/colors.dart';
+import 'package:tatwei/controllers/admin_controller.dart';
+import 'package:tatwei/model/dymmy_oppertunity_model.dart';
 import 'package:tatwei/model/oppertunity_model.dart';
+import 'package:tatwei/views/pages/admin_panel/admin_home/admin_edit_home_detail_page.dart';
 import 'package:tatwei/views/pages/admin_panel/admin_home/admin_home_detail_page.dart';
 import 'package:tatwei/views/pages/admin_panel/components/admin_drawer_data.dart';
-import 'package:tatwei/views/pages/student_panel/components/drawer_data.dart';
 import 'package:tatwei/views/pages/student_panel/home/components/apply_filter_button.dart';
 import 'package:tatwei/views/pages/student_panel/home/components/search_field.dart';
-import 'package:tatwei/views/pages/student_panel/home/home_detail_page.dart';
 
 class AdminHomePage extends StatefulWidget {
   const AdminHomePage({super.key});
@@ -19,12 +20,23 @@ class AdminHomePage extends StatefulWidget {
 
 class _AdminHomePageState extends State<AdminHomePage> {
   bool isChecked = false;
+  AdminController adminController = Get.put(AdminController());
+
+  @override
+  void initState() {
+    adminController.getAdminInformation().then((value) {
+      adminController.getOppertunities();
+    });
+
+    // TODO: implement initState
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      drawer: const AdminDrawerData(),
+      drawer: AdminDrawerData(),
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(70.0),
         child: AppBar(
@@ -60,80 +72,185 @@ class _AdminHomePageState extends State<AdminHomePage> {
             SizedBox(height: Get.height * 0.03),
             const SearchField(),
             SizedBox(height: Get.height * 0.03),
+
             Expanded(
-              child: ListView.builder(
-                itemCount: oppeertunityList.length,
-                itemBuilder: (context, index) {
-                  return Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-                    child: GestureDetector(
-                      onTap: () {
-                        Get.to(() => const AdminHomeDetailPage());
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: ColorClass.primaryColor,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Row(
-                          children: [
-                            Image.asset(oppeertunityList[index].image),
-                            Column(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+              child: GetX<AdminController>(
+                  init: Get.put(AdminController()),
+                  builder: (cont) {
+                    return ListView.builder(
+                      itemCount: cont.getOpportunityListList.length,
+                      itemBuilder: (context, index) {
+                        OppertunityModel oppertunityModel =
+                            cont.getOpportunityListList[index];
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 8),
+                          child: GestureDetector(
+                            onTap: () {
+                              Get.to(() => AdminEditHomeDetailPage(
+                                    oppertunityModel:
+                                        cont.getOpportunityListList[index],
+                                  ));
+
+                              // Get.to(() => const TeacherHomeDetailPage());
+
+                              // Get.to(() => TeacherOppertunityDetailPage(
+                              //       oppertunityModel: oppertunityModel,
+                              //     ));
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: ColorClass.primaryColor,
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: Row(
+                                children: [
+                                  CircleAvatar(
+                                    backgroundImage: NetworkImage(
+                                        oppertunityModel.imageUrl!),
+                                  ),
+                                  // Image.network(oppertunityModel.imageUrl!),
+                                  Column(
                                     children: [
-                                      Container(
-                                        // width: Get.width * 0.6,
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 15, vertical: 0),
-                                        decoration: BoxDecoration(
-                                          color: ColorClass.darkGreenColor
-                                              .withOpacity(.5),
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                        ),
-                                        child: Text(
-                                          oppeertunityList[index].title,
-                                          style: GoogleFonts.inter(
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.normal),
-                                        ),
-                                      ),
-                                      SizedBox(height: Get.height * 0.02),
-                                      SizedBox(
-                                        width: Get.width * 0.6,
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
                                           children: [
-                                            ApplyFilterButton(
-                                                title: 'خدمية', onTap: () {}),
-                                            SizedBox(width: Get.width * 0.02),
-                                            ApplyFilterButton(
-                                                title: 'داخلية',
-                                                onTap: () => Get.to(() =>
-                                                    const AdminHomeDetailPage())),
+                                            Container(
+                                              // width: Get.width * 0.6,
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 15,
+                                                      vertical: 0),
+                                              decoration: BoxDecoration(
+                                                color: ColorClass.darkGreenColor
+                                                    .withOpacity(.5),
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                              ),
+                                              child: Center(
+                                                child: Text(
+                                                  oppertunityModel
+                                                      .oppertunityName!,
+                                                  style: GoogleFonts.inter(
+                                                      fontSize: 18,
+                                                      fontWeight:
+                                                          FontWeight.normal),
+                                                ),
+                                              ),
+                                            ),
+                                            SizedBox(height: Get.height * 0.02),
+                                            SizedBox(
+                                              width: Get.width * 0.6,
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
+                                                children: [
+                                                  ApplyFilterButton(
+                                                      title: oppertunityModel
+                                                          .interest!,
+                                                      onTap: () {}),
+                                                  SizedBox(
+                                                      width: Get.width * 0.02),
+                                                  ApplyFilterButton(
+                                                      title: oppertunityModel
+                                                              .isExternal!
+                                                          ? 'خارجية '
+                                                          : 'داخلية',
+                                                      onTap: () {}),
+                                                ],
+                                              ),
+                                            ),
                                           ],
                                         ),
                                       ),
                                     ],
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  );
-                },
-              ),
+                          ),
+                        );
+                      },
+                    );
+                  }),
             ),
+
+            // Expanded(
+            //   child: ListView.builder(
+            //     itemCount: oppeertunityList.length,
+            //     itemBuilder: (context, index) {
+            //       return Padding(
+            //         padding:
+            //             const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+            //         child: GestureDetector(
+            //           onTap: () {
+            //           },
+            //           child: Container(
+            //             decoration: BoxDecoration(
+            //               color: ColorClass.primaryColor,
+            //               borderRadius: BorderRadius.circular(10),
+            //             ),
+            //             child: Row(
+            //               children: [
+            //                 Image.asset(oppeertunityList[index].image),
+            //                 Column(
+            //                   children: [
+            //                     Padding(
+            //                       padding: const EdgeInsets.all(8.0),
+            //                       child: Column(
+            //                         crossAxisAlignment:
+            //                             CrossAxisAlignment.start,
+            //                         children: [
+            //                           Container(
+            //                             // width: Get.width * 0.6,
+            //                             padding: const EdgeInsets.symmetric(
+            //                                 horizontal: 15, vertical: 0),
+            //                             decoration: BoxDecoration(
+            //                               color: ColorClass.darkGreenColor
+            //                                   .withOpacity(.5),
+            //                               borderRadius:
+            //                                   BorderRadius.circular(10),
+            //                             ),
+            //                             child: Text(
+            //                               oppeertunityList[index].title,
+            //                               style: GoogleFonts.inter(
+            //                                   fontSize: 18,
+            //                                   fontWeight: FontWeight.normal),
+            //                             ),
+            //                           ),
+            //                           SizedBox(height: Get.height * 0.02),
+            //                           SizedBox(
+            //                             width: Get.width * 0.6,
+            //                             child: Row(
+            //                               mainAxisAlignment:
+            //                                   MainAxisAlignment.start,
+            //                               children: [
+            //                                 ApplyFilterButton(
+            //                                     title: 'خدمية', onTap: () {}),
+            //                                 SizedBox(width: Get.width * 0.02),
+            //                                 ApplyFilterButton(
+            //                                     title: 'داخلية',
+            //                                     onTap: () => Get.to(() =>
+            //                                         const AdminHomeDetailPage())),
+            //                               ],
+            //                             ),
+            //                           ),
+            //                         ],
+            //                       ),
+            //                     ),
+            //                   ],
+            //                 ),
+            //               ],
+            //             ),
+            //           ),
+            //         ),
+            //       );
+            //     },
+            //   ),
+            // ),
           ],
         ),
       ),

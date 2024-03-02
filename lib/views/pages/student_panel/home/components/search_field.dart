@@ -53,7 +53,7 @@ class SearchField extends StatelessWidget {
             ),
           ),
           const SizedBox(width: 10),
-          const FilterButton(),
+          FilterButton(),
         ],
       ),
     );

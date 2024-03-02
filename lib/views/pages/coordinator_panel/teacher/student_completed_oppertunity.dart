@@ -1,44 +1,23 @@
-import 'dart:io';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:tatwei/constants/colors.dart';
-import 'package:tatwei/controllers/student_controller.dart';
+import 'package:tatwei/controllers/school_controller.dart';
 import 'package:tatwei/model/registered_and_completed_oppertunitymode;.dart';
+import 'package:tatwei/model/student_model.dart';
 
-class AlmaqtamlahPage extends StatefulWidget {
-  const AlmaqtamlahPage({super.key});
-
+class StudentCompletedOpportunity extends StatefulWidget {
+  const StudentCompletedOpportunity({super.key, required this.studentModel});
+  final StudentModel studentModel;
   @override
-  State<AlmaqtamlahPage> createState() => _AlmaqtamlahPageState();
+  State<StudentCompletedOpportunity> createState() => _AlmaqtamlahPageState();
 }
 
-class _AlmaqtamlahPageState extends State<AlmaqtamlahPage> {
+class _AlmaqtamlahPageState extends State<StudentCompletedOpportunity> {
   bool isShowPopUP = false;
 
-  File? imageFile;
-
-  chooseProfilePic(ImageSource source) async {
-    try {
-      final pickedImage = await ImagePicker().pickImage(source: source);
-
-      if (pickedImage == null) return null;
-      File img = File(pickedImage.path);
-      setState(() {
-        imageFile = img;
-      });
-
-      return img;
-    } catch (e) {
-      print('Error: $e');
-      return null;
-    }
-  }
-
-  StudentController studentController = Get.put(StudentController());
+  SchoolController schoolController = Get.put(SchoolController());
   RegisteredAndCompletedOppertunityModel?
       registeredAndCompletedOppertunityModel;
   @override
@@ -49,8 +28,8 @@ class _AlmaqtamlahPageState extends State<AlmaqtamlahPage> {
         Column(
           children: [
             Expanded(
-              child: GetX<StudentController>(
-                  init: Get.put(StudentController()),
+              child: GetX<SchoolController>(
+                  init: Get.put(SchoolController()),
                   builder: (cont) {
                     return ListView.builder(
                       itemCount: cont.getcompletedOpportunityList.length,
@@ -138,7 +117,7 @@ class _AlmaqtamlahPageState extends State<AlmaqtamlahPage> {
                                                                   .38)),
                                                       child: Center(
                                                         child: Text(
-                                                          'رفع الشهادة',
+                                                          'عرض الشهادة',
                                                           style: GoogleFonts.inter(
                                                               color:
                                                                   Colors.black,
@@ -183,44 +162,20 @@ class _AlmaqtamlahPageState extends State<AlmaqtamlahPage> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Container(
-                        height: 186,
-                        width: Get.width,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: registeredAndCompletedOppertunityModel!
-                                .certificatImage!.isNotEmpty
-                            ? CachedNetworkImage(
-                                imageUrl:
-                                    registeredAndCompletedOppertunityModel!
-                                        .certificatImage!,
-                                placeholder: (context, url) => const Center(
-                                    child: CircularProgressIndicator()),
-                                errorWidget: (context, url, error) =>
-                                    Icon(Icons.error),
-                              )
-                            : imageFile != null
-                                ? Image.file(imageFile!)
-                                : Center(
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        chooseProfilePic(ImageSource.gallery);
-                                      },
-                                      child: Container(
-                                          height: 40,
-                                          width: 92,
-                                          decoration: BoxDecoration(
-                                            color: ColorClass.darkGreenColor,
-                                            borderRadius:
-                                                BorderRadius.circular(12),
-                                          ),
-                                          child: Center(
-                                              child: Image.asset(
-                                                  'assets/icons/text.png'))),
-                                    ),
-                                  ),
-                      ),
+                          height: 186,
+                          width: Get.width,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: CachedNetworkImage(
+                            imageUrl: registeredAndCompletedOppertunityModel!
+                                .certificatImage!,
+                            placeholder: (context, url) => const Center(
+                                child: CircularProgressIndicator()),
+                            errorWidget: (context, url, error) =>
+                                Icon(Icons.error),
+                          )),
                       SizedBox(height: Get.height * 0.03),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -228,8 +183,44 @@ class _AlmaqtamlahPageState extends State<AlmaqtamlahPage> {
                           GestureDetector(
                             onTap: () {
                               setState(() {
+                                schoolController.acceptCertificate(
+                                    widget.studentModel,
+                                    registeredAndCompletedOppertunityModel!);
+
                                 isShowPopUP = false;
-                                imageFile = null;
+                              });
+                            },
+                            child: Container(
+                              alignment: Alignment.center,
+                              height: 40,
+                              width: 92,
+                              decoration: BoxDecoration(
+                                color: ColorClass.darkGreenColor,
+                                borderRadius: BorderRadius.circular(40),
+                              ),
+                              child: const Text(
+                                'توثيق',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ),
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                isShowPopUP = !isShowPopUP;
+
+                                // if (imageFile != null) {
+                                //   studentController
+                                //       .uploadCertificate(
+                                //           imageFile!,
+                                //           registeredAndCompletedOppertunityModel!
+                                //               .id!)
+                                //       .then((value) {
+                                //     isShowPopUP = false;
+                                //   });
+                                // } else {
+                                //   isShowPopUP = false;
+                                // }
                               });
                             },
                             child: Container(
@@ -239,43 +230,12 @@ class _AlmaqtamlahPageState extends State<AlmaqtamlahPage> {
                                 color: ColorClass.darkGreenColor,
                                 borderRadius: BorderRadius.circular(40),
                               ),
-                              child: Image.asset('assets/icons/الغاء.png'),
+                              child: Center(
+                                  child: Text(
+                                'رفض',
+                                style: TextStyle(color: Colors.white),
+                              )),
                             ),
-                          ),
-                          Obx(
-                            () => studentController.isCertificateUpload.value
-                                ? const Center(
-                                    child: CircularProgressIndicator(),
-                                  )
-                                : GestureDetector(
-                                    onTap: () {
-                                      setState(() {
-                                        if (imageFile != null) {
-                                          studentController
-                                              .uploadCertificate(
-                                                  imageFile!,
-                                                  registeredAndCompletedOppertunityModel!
-                                                      .id!)
-                                              .then((value) {
-                                            isShowPopUP = false;
-                                          });
-                                        } else {
-                                          isShowPopUP = false;
-                                        }
-                                      });
-                                    },
-                                    child: Container(
-                                      height: 40,
-                                      width: 92,
-                                      decoration: BoxDecoration(
-                                        color: ColorClass.darkGreenColor,
-                                        borderRadius: BorderRadius.circular(40),
-                                      ),
-                                      child: Center(
-                                          child: Image.asset(
-                                              'assets/icons/حفظ.png')),
-                                    ),
-                                  ),
                           ),
                         ],
                       ),

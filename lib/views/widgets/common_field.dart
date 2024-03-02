@@ -6,26 +6,32 @@ import 'package:tatwei/constants/colors.dart';
 import 'package:tatwei/constants/font_style.dart';
 
 class CommonField extends StatelessWidget {
-  CommonField({
-    super.key,
-    required this.controller,
-    required this.prefixIcon,
-    required this.onChanged,
-    required this.validator,
-    this.isObscure = false,
-    required this.title,
-    this.isShowPrefix = true,
-    this.isBoldTitle = false,
-    this.isFilled = false,
-  });
+  CommonField(
+      {super.key,
+      required this.controller,
+      required this.prefixIcon,
+      required this.onChanged,
+      required this.validator,
+      this.isObscure = false,
+      required this.title,
+      this.isShowPrefix = true,
+      this.isBoldTitle = false,
+      this.isFilled = false,
+      this.readOnly = false,
+      this.onTap,
+      this.textInputType});
   final TextEditingController controller;
   final String prefixIcon;
   final void Function(String)? onChanged;
   final String? Function(String?)? validator;
+  Function()? onTap;
+
+  TextInputType? textInputType;
   bool isObscure;
   final String title;
   bool isShowPrefix;
   bool isBoldTitle;
+  bool? readOnly;
   bool isFilled;
   @override
   Widget build(BuildContext context) {
@@ -42,12 +48,19 @@ class CommonField extends StatelessWidget {
           controller: controller,
           onChanged: onChanged,
           validator: validator,
+          readOnly: readOnly!,
           textDirection: TextDirection.rtl,
+          keyboardType: textInputType,
           decoration: InputDecoration(
             filled: isFilled,
             fillColor: isFilled ? ColorClass.primaryColor : null,
             hintTextDirection: TextDirection.rtl,
-            suffixIcon: isShowPrefix ? Image.asset(prefixIcon) : null,
+            suffixIcon: isShowPrefix
+                ? onTap != null
+                    ? GestureDetector(
+                        onTap: onTap, child: Image.asset(prefixIcon))
+                    : Image.asset(prefixIcon)
+                : null,
             contentPadding: const EdgeInsets.only(right: 10),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(9),

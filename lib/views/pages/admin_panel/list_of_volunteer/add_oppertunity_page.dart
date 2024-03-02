@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:tatwei/constants/admin_constant.dart';
 import 'package:tatwei/constants/colors.dart';
+import 'package:tatwei/controllers/auth_controller.dart';
 import 'package:tatwei/views/widgets/common_field.dart';
 
+// ignore: must_be_immutable
 class AddOppertunityPage extends StatelessWidget {
   AddOppertunityPage({super.key});
   TextEditingController oppertunityNameCntr = TextEditingController();
@@ -17,6 +20,30 @@ class AddOppertunityPage extends StatelessWidget {
   TextEditingController placeCtrl = TextEditingController();
   TextEditingController locationCtrl = TextEditingController();
   TextEditingController benefitCtrl = TextEditingController();
+
+  DateTime selectedDate = DateTime.now();
+
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+        context: context,
+        initialDate: selectedDate,
+        firstDate: DateTime(2000, 1),
+        lastDate: DateTime(2100),
+        builder: (BuildContext context, Widget? child) {
+          return Theme(
+            data: Theme.of(context).copyWith(
+                colorScheme:
+                    ColorScheme.light(primary: ColorClass.darkGreenColor)),
+            child: child!,
+          );
+        });
+
+    if (picked != null && picked != selectedDate) {
+      selectedDate = picked;
+    }
+  }
+
+  AuthController authController = Get.put(AuthController());
 
   @override
   Widget build(BuildContext context) {
@@ -86,6 +113,7 @@ class AddOppertunityPage extends StatelessWidget {
                   title: 'تفاصيل الفرصة التطوعية ',
                 ),
                 SizedBox(height: Get.height * 0.01),
+                ElevatedButton(onPressed: () {}, child: Text('SELECT DATE')),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -152,51 +180,57 @@ class AddOppertunityPage extends StatelessWidget {
                   ],
                 ),
                 SizedBox(height: Get.height * 0.01),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      child: CommonField(
-                        isBoldTitle: true,
-                        isFilled: true,
-                        controller: interestCtrl,
-                        prefixIcon: 'assets/icons/edit.png',
-                        onChanged: (value) {},
-                        validator: (value) {
-                          return '';
-                        },
-                        title: 'المجال التطوعي',
-                      ),
-                    ),
-                    SizedBox(width: Get.width * 0.1),
-                    Expanded(
-                      child: CommonField(
-                        isBoldTitle: true,
-                        isFilled: true,
-                        controller: placeCtrl,
-                        prefixIcon: 'assets/icons/edit.png',
-                        onChanged: (value) {},
-                        validator: (value) {
-                          return '';
-                        },
-                        title: 'مكان التطوع',
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: Get.height * 0.01),
-                CommonField(
-                  isBoldTitle: true,
-                  isFilled: true,
-                  controller: locationCtrl,
-                  prefixIcon: 'assets/icons/edit.png',
-                  onChanged: (value) {},
-                  validator: (value) {
-                    return '';
-                  },
-                  title: 'الموقع',
-                ),
-                SizedBox(height: Get.height * 0.01),
+                authController.auth.currentUser!.uid == AdminConstant.adminId
+                    ? Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                child: CommonField(
+                                  isBoldTitle: true,
+                                  isFilled: true,
+                                  controller: interestCtrl,
+                                  prefixIcon: 'assets/icons/edit.png',
+                                  onChanged: (value) {},
+                                  validator: (value) {
+                                    return '';
+                                  },
+                                  title: 'المجال التطوعي',
+                                ),
+                              ),
+                              SizedBox(width: Get.width * 0.1),
+                              Expanded(
+                                child: CommonField(
+                                  isBoldTitle: true,
+                                  isFilled: true,
+                                  controller: placeCtrl,
+                                  prefixIcon: 'assets/icons/edit.png',
+                                  onChanged: (value) {},
+                                  validator: (value) {
+                                    return '';
+                                  },
+                                  title: 'مكان التطوع',
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: Get.height * 0.01),
+                          CommonField(
+                            isBoldTitle: true,
+                            isFilled: true,
+                            controller: locationCtrl,
+                            prefixIcon: 'assets/icons/edit.png',
+                            onChanged: (value) {},
+                            validator: (value) {
+                              return '';
+                            },
+                            title: 'الموقع',
+                          ),
+                          SizedBox(height: Get.height * 0.01),
+                        ],
+                      )
+                    : SizedBox(),
                 CommonField(
                   isBoldTitle: true,
                   isFilled: true,

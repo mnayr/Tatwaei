@@ -2,21 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tatwei/constants/colors.dart';
+import 'package:tatwei/controllers/auth_controller.dart';
+import 'package:tatwei/controllers/school_controller.dart';
 import 'package:tatwei/views/pages/admin_panel/list_of_volunteer/list_of_volunteer_page.dart';
 import 'package:tatwei/views/pages/authentication/login_page.dart';
 import 'package:tatwei/views/pages/coordinator_panel/request/request_page.dart';
 import 'package:tatwei/views/pages/coordinator_panel/student_info/teacher_student_info_page.dart';
 import 'package:tatwei/views/pages/coordinator_panel/teacher/teacher_page.dart';
-import 'package:tatwei/views/pages/student_panel/fursi/fursi_page.dart';
-import 'package:tatwei/views/pages/student_panel/saati/saati_page.dart';
-import 'package:tatwei/views/pages/student_panel/student_info/student_info_page.dart';
 import 'package:tatwei/views/widgets/drawer_tile.dart';
 
 class TeacherDrawerData extends StatelessWidget {
-  const TeacherDrawerData({
+  TeacherDrawerData({
     super.key,
   });
-
+  final AuthController authController = Get.put(AuthController());
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -31,11 +30,19 @@ class TeacherDrawerData extends StatelessWidget {
               child: Column(
                 children: [
                   Image.asset('assets/icons/profile.png'),
-                  Text('الثانوية الرابعة',
-                      style: GoogleFonts.inter(
-                          color: ColorClass.darkGreenColor,
-                          fontSize: 25,
-                          fontWeight: FontWeight.w600)),
+                  GetX<SchoolController>(
+                      init: Get.put(SchoolController()),
+                      builder: (cont) {
+                        return cont.getSchoolData.email == null
+                            ? const Center(
+                                child: CircularProgressIndicator(),
+                              )
+                            : Text(cont.getSchoolData.schoolName!,
+                                style: GoogleFonts.inter(
+                                    color: ColorClass.darkGreenColor,
+                                    fontSize: 25,
+                                    fontWeight: FontWeight.w600));
+                      }),
                 ],
               ),
             ),
@@ -65,7 +72,9 @@ class TeacherDrawerData extends StatelessWidget {
             ),
             SizedBox(height: Get.height * 0.06),
             DrawerTile(
-              onTap: () => Get.offAll(() => LoginPage()),
+              onTap: () {
+                authController.logOut();
+              },
               title: 'تسجيل خروج',
               iconImage: '',
             ),

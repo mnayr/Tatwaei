@@ -3,7 +3,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tatwei/constants/colors.dart';
-import 'package:tatwei/views/pages/coordinator_panel/teacher_home/oppertunity_detail_page.dart';
 
 class TeacherHomeDetailPage extends StatelessWidget {
   const TeacherHomeDetailPage({super.key});
@@ -186,8 +185,8 @@ class TeacherHomeDetailPage extends StatelessWidget {
                             padding: const EdgeInsets.all(8.0),
                             child: GestureDetector(
                               onTap: () {
-                                Get.to(
-                                    () => const TeacherOppertunityDetailPage());
+                                // Get.to(
+                                //     () => const TeacherOppertunityDetailPage());
                               },
                               child: Container(
                                 height: 35,

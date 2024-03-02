@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:msh_checkbox/msh_checkbox.dart';
+import 'package:tatwei/controllers/student_controller.dart';
 import 'package:tatwei/model/search_model.dart';
 
 class AlmajaalSearchData extends StatefulWidget {
@@ -14,6 +15,7 @@ class AlmajaalSearchData extends StatefulWidget {
 }
 
 class _AlmajaalSearchDataState extends State<AlmajaalSearchData> {
+  StudentController studentController = Get.put(StudentController());
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -51,6 +53,20 @@ class _AlmajaalSearchDataState extends State<AlmajaalSearchData> {
                             onChanged: (selected) {
                               setState(() {
                                 almajaalList[itemIndex].checkValue = selected;
+                                if (selected) {
+                                  studentController.interestList
+                                      .add(almajaalList[itemIndex].title);
+
+                                  print(
+                                      'interest list length is ${studentController.interestList.length}');
+                                } else {
+                                  studentController.interestList.removeWhere(
+                                      (element) =>
+                                          element ==
+                                          almajaalList[itemIndex].title);
+                                  print(
+                                      'interest list length is ${studentController.interestList.length}');
+                                }
                               });
                             },
                           ),

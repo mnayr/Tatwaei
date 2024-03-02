@@ -3,7 +3,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tatwei/constants/colors.dart';
-import 'package:tatwei/views/pages/admin_panel/admin_home/hazaf_page.dart';
 import 'package:tatwei/views/pages/admin_panel/admin_home/taadeel_page.dart';
 
 class HazafPage extends StatelessWidget {

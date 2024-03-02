@@ -2,16 +2,33 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tatwei/constants/colors.dart';
+import 'package:tatwei/controllers/auth_controller.dart';
+import 'package:tatwei/controllers/student_controller.dart';
 import 'package:tatwei/views/pages/authentication/login_page.dart';
 import 'package:tatwei/views/pages/student_panel/fursi/fursi_page.dart';
 import 'package:tatwei/views/pages/student_panel/saati/saati_page.dart';
 import 'package:tatwei/views/pages/student_panel/student_info/student_info_page.dart';
 import 'package:tatwei/views/widgets/drawer_tile.dart';
 
-class DrawerData extends StatelessWidget {
+class DrawerData extends StatefulWidget {
   const DrawerData({
     super.key,
   });
+
+  @override
+  State<DrawerData> createState() => _DrawerDataState();
+}
+
+class _DrawerDataState extends State<DrawerData> {
+  StudentController studentController = Get.put(StudentController());
+  AuthController authController = Get.put(AuthController());
+
+  @override
+  void initState() {
+    //   studentController.getStudentData();
+    // TODO: implement initState
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,19 +39,30 @@ class DrawerData extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
-              padding: const EdgeInsets.only(right: 10),
-              child: Column(
-                children: [
-                  Image.asset('assets/icons/profile.png'),
-                  Text('نورة',
-                      style: GoogleFonts.inter(
-                          color: ColorClass.darkGreenColor,
-                          fontSize: 25,
-                          fontWeight: FontWeight.w600)),
-                ],
-              ),
+            const SizedBox(
+              height: 25,
             ),
+            GetX<StudentController>(
+                init: Get.put(StudentController()),
+                builder: (cont) {
+                  return cont.getstudentData.email == null
+                      ? const Center(
+                          child: CircularProgressIndicator(),
+                        )
+                      : Padding(
+                          padding: const EdgeInsets.only(right: 10),
+                          child: Column(
+                            children: [
+                              Image.asset('assets/icons/profile.png'),
+                              Text(cont.getstudentData.studenName!,
+                                  style: GoogleFonts.inter(
+                                      color: ColorClass.darkGreenColor,
+                                      fontSize: 25,
+                                      fontWeight: FontWeight.w600)),
+                            ],
+                          ),
+                        );
+                }),
             SizedBox(height: Get.height * 0.06),
             DrawerTile(
               onTap: () => Get.to(() => StudentInfoPage()),
@@ -55,7 +83,9 @@ class DrawerData extends StatelessWidget {
             ),
             SizedBox(height: Get.height * 0.06),
             DrawerTile(
-              onTap: () => Get.offAll(() => LoginPage()),
+              onTap: () {
+                authController.logOut();
+              },
               title: 'تسجيل خروج',
               iconImage: '',
             ),

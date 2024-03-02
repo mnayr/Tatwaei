@@ -3,11 +3,43 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tatwei/constants/colors.dart';
+import 'package:tatwei/controllers/auth_controller.dart';
+import 'package:tatwei/controllers/school_controller.dart';
+import 'package:tatwei/model/oppertunity_model.dart';
 import 'package:tatwei/views/pages/admin_panel/admin_home/hazaf_page.dart';
-import 'package:tatwei/views/pages/admin_panel/admin_home/taadeel_page.dart';
+import 'package:intl/intl.dart';
+import 'package:tatwei/views/pages/admin_panel/list_of_volunteer/volunteer_data.dart';
 
-class TeacherOppertunityDetailPage extends StatelessWidget {
-  const TeacherOppertunityDetailPage({super.key});
+class TeacherOppertunityDetailPage extends StatefulWidget {
+  const TeacherOppertunityDetailPage(
+      {super.key, required this.oppertunityModel});
+
+  final OppertunityModel oppertunityModel;
+
+  @override
+  State<TeacherOppertunityDetailPage> createState() =>
+      _TeacherOppertunityDetailPageState();
+}
+
+class _TeacherOppertunityDetailPageState
+    extends State<TeacherOppertunityDetailPage> {
+  String formatDate(String dateString) {
+    DateTime dateTime = DateTime.parse(dateString);
+    return DateFormat('MMM dd')
+        .format(dateTime); // Format to show only month and day
+  }
+
+  int daysDifference(String startDate, String endDate) {
+    DateTime start = DateTime.parse(startDate);
+    DateTime end = DateTime.parse(endDate);
+    Duration difference = end.difference(start);
+    int differenceInDays = difference.inDays;
+    return differenceInDays;
+  }
+
+  AuthController authController = Get.put(AuthController());
+
+  SchoolController schoolController = Get.put(SchoolController());
 
   @override
   Widget build(BuildContext context) {
@@ -75,7 +107,7 @@ class TeacherOppertunityDetailPage extends StatelessWidget {
                           ),
                           child: Center(
                             child: Text(
-                              'باحث ميداني ',
+                              widget.oppertunityModel.oppertunityName!,
                               style: GoogleFonts.inter(
                                   fontSize: 18,
                                   fontWeight: FontWeight.normal,
@@ -91,19 +123,21 @@ class TeacherOppertunityDetailPage extends StatelessWidget {
                         ),
                         const SizedBox(height: 10),
                         Text(
-                          'التحقق من البيانات المقدمة و جمع بيانات حول احتياجات المستفيد و رصد جميع المتطلبات اللازمة',
+                          widget.oppertunityModel.oppertunityDetail!,
+                          //  'التحقق من البيانات المقدمة و جمع بيانات حول احتياجات المستفيد و رصد جميع المتطلبات اللازمة',
                           style: GoogleFonts.inter(
                               color: Colors.black, fontSize: 14),
                         ),
                         const SizedBox(height: 10),
                         Text(
-                          '12 مارس - 30 مايو',
+                          '${formatDate(widget.oppertunityModel.startTime!)} - ${formatDate(widget.oppertunityModel.endTime!)}',
+                          //'12 مارس - 30 مايو',
                           style: GoogleFonts.inter(
                               color: ColorClass.darkGreenColor, fontSize: 16),
                         ),
                         const SizedBox(height: 10),
                         Text(
-                          '79 يوم',
+                          '${daysDifference(widget.oppertunityModel.startTime!, widget.oppertunityModel.endTime!)} يوم',
                           style: GoogleFonts.inter(
                               color: Colors.black, fontSize: 14),
                         ),
@@ -115,7 +149,7 @@ class TeacherOppertunityDetailPage extends StatelessWidget {
                         ),
                         const SizedBox(height: 10),
                         Text(
-                          '35 مقعد',
+                          '${widget.oppertunityModel.totalSeats} مقعد',
                           style: GoogleFonts.inter(
                               color: Colors.black, fontSize: 14),
                         ),
@@ -127,36 +161,47 @@ class TeacherOppertunityDetailPage extends StatelessWidget {
                         ),
                         const SizedBox(height: 10),
                         Text(
-                          'اجتماعية',
+                          //'اجتماعية',
+                          widget.oppertunityModel.interest!,
                           style: GoogleFonts.inter(
                               color: Colors.black, fontSize: 14),
                         ),
                         const SizedBox(height: 10),
-                        Text(
-                          'مكان التطوع',
-                          style: GoogleFonts.inter(
-                              color: ColorClass.darkGreenColor, fontSize: 16),
-                        ),
-                        const SizedBox(height: 10),
-                        Text(
-                          'هيئة الاحصاء',
-                          style: GoogleFonts.inter(
-                              color: Colors.black, fontSize: 14),
-                        ),
-                        const SizedBox(height: 10),
-                        Text(
-                          'الموقع',
-                          style: GoogleFonts.inter(
-                              color: ColorClass.darkGreenColor, fontSize: 16),
-                        ),
-                        const SizedBox(height: 10),
-                        Text(
-                          'https://maps.app.goo.gl/8KkdepLQwDdq8qfH9?g_st=iw',
-                          textDirection: TextDirection.rtl,
-                          style: GoogleFonts.inter(
-                              color: Colors.black, fontSize: 14),
-                        ),
-                        const SizedBox(height: 10),
+                        widget.oppertunityModel.isExternal!
+                            ? Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'مكان التطوع',
+                                    style: GoogleFonts.inter(
+                                        color: ColorClass.darkGreenColor,
+                                        fontSize: 16),
+                                  ),
+                                  const SizedBox(height: 10),
+                                  Text(
+                                    widget.oppertunityModel.address!,
+                                    style: GoogleFonts.inter(
+                                        color: Colors.black, fontSize: 14),
+                                  ),
+                                  const SizedBox(height: 10),
+                                  Text(
+                                    'الموقع',
+                                    style: GoogleFonts.inter(
+                                        color: ColorClass.darkGreenColor,
+                                        fontSize: 16),
+                                  ),
+                                  const SizedBox(height: 10),
+                                  Text(
+                                    widget.oppertunityModel.link!,
+                                    //'https://maps.app.goo.gl/8KkdepLQwDdq8qfH9?g_st=iw',
+                                    // textDirection: TextDirection.rtl,
+                                    style: GoogleFonts.inter(
+                                        color: Colors.black, fontSize: 14),
+                                  ),
+                                  const SizedBox(height: 10),
+                                ],
+                              )
+                            : SizedBox(),
                         Text(
                           'الجنس',
                           style: GoogleFonts.inter(
@@ -164,7 +209,7 @@ class TeacherOppertunityDetailPage extends StatelessWidget {
                         ),
                         const SizedBox(height: 10),
                         Text(
-                          'ذكر',
+                          widget.oppertunityModel.gender!,
                           style: GoogleFonts.inter(
                               color: Colors.black, fontSize: 16),
                         ),
@@ -176,57 +221,74 @@ class TeacherOppertunityDetailPage extends StatelessWidget {
                         ),
                         const SizedBox(height: 10),
                         Text(
-                          '-الثواب الاجر -\n-توثيق الساعات التطوعية  \n-المساهمة في خدمة المجتمع',
+                          widget.oppertunityModel.benefits!,
+                          // '-الثواب الاجر -\n-توثيق الساعات التطوعية  \n-المساهمة في خدمة المجتمع',
                           style: GoogleFonts.inter(
                               color: Colors.black, fontSize: 16),
                         ),
                         const SizedBox(height: 20),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              GestureDetector(
-                                onTap: () {
-                                  Get.to(() => TaadeelPage());
-                                },
-                                child: Container(
-                                  height: 35,
-                                  width: 98,
-                                  decoration: BoxDecoration(
-                                    color: ColorClass.darkGreenColor,
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  child: Center(
-                                    child: Text(
-                                      'تعديل',
-                                      style: GoogleFonts.inter(
-                                          color: Colors.white, fontSize: 20),
+                        widget.oppertunityModel.schoolId ==
+                                authController.auth.currentUser!.uid
+                            ? Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    GestureDetector(
+                                      onTap: () {
+                                        // Get.to(() => TaadeelPage());
+
+                                        Get.to(() => VolunteerDataPage(
+                                              oppertunityModel:
+                                                  widget.oppertunityModel,
+                                            ));
+                                      },
+                                      child: Container(
+                                        height: 35,
+                                        width: 98,
+                                        decoration: BoxDecoration(
+                                          color: ColorClass.darkGreenColor,
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                        ),
+                                        child: Center(
+                                          child: Text(
+                                            'تعديل',
+                                            style: GoogleFonts.inter(
+                                                color: Colors.white,
+                                                fontSize: 20),
+                                          ),
+                                        ),
+                                      ),
                                     ),
-                                  ),
-                                ),
-                              ),
-                              GestureDetector(
-                                onTap: () => Get.to(() => HazafPage()),
-                                child: Container(
-                                  height: 35,
-                                  width: 98,
-                                  decoration: BoxDecoration(
-                                    color: ColorClass.darkGreenColor,
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  child: Center(
-                                    child: Text(
-                                      'حذف',
-                                      style: GoogleFonts.inter(
-                                          color: Colors.white, fontSize: 20),
+                                    GestureDetector(
+                                      onTap: () {
+                                        showDeleteOpportunityConfirmationDialog(
+                                            context, widget.oppertunityModel);
+                                      },
+                                      child: Container(
+                                        height: 35,
+                                        width: 98,
+                                        decoration: BoxDecoration(
+                                          color: ColorClass.darkGreenColor,
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                        ),
+                                        child: Center(
+                                          child: Text(
+                                            'حذف',
+                                            style: GoogleFonts.inter(
+                                                color: Colors.white,
+                                                fontSize: 20),
+                                          ),
+                                        ),
+                                      ),
                                     ),
-                                  ),
+                                  ],
                                 ),
-                              ),
-                            ],
-                          ),
-                        ),
+                              )
+                            : SizedBox(),
                       ],
                     ),
                   ),
@@ -236,6 +298,37 @@ class TeacherOppertunityDetailPage extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  void showDeleteOpportunityConfirmationDialog(
+      BuildContext context, OppertunityModel oppertunityModel) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('تأكيد الحذف'),
+          content: const Text('هل أنت متأكد أنك تريد حذف هذه الفرصة؟'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the dialog
+              },
+              child: const Text('إلغاء'),
+            ),
+            TextButton(
+              onPressed: () {
+                schoolController.deleteOppertunity(oppertunityModel);
+                // Perform the delete operation here
+                // ...
+
+                Navigator.of(context).pop(); // Close the dialog
+              },
+              child: const Text('حذف'),
+            ),
+          ],
+        );
+      },
     );
   }
 }

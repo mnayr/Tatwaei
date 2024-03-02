@@ -3,9 +3,30 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tatwei/constants/colors.dart';
+import 'package:tatwei/controllers/student_controller.dart';
+import 'package:tatwei/model/oppertunity_model.dart';
+import 'package:intl/intl.dart';
 
+// ignore: must_be_immutable
 class HomeDetailPage extends StatelessWidget {
-  const HomeDetailPage({super.key});
+  HomeDetailPage({super.key, required this.oppertunityModel});
+  final OppertunityModel oppertunityModel;
+
+  String formatDate(String dateString) {
+    DateTime dateTime = DateTime.parse(dateString);
+    return DateFormat('MMM dd')
+        .format(dateTime); // Format to show only month and day
+  }
+
+  int daysDifference(String startDate, String endDate) {
+    DateTime start = DateTime.parse(startDate);
+    DateTime end = DateTime.parse(endDate);
+    Duration difference = end.difference(start);
+    int differenceInDays = difference.inDays;
+    return differenceInDays;
+  }
+
+  StudentController studentController = Get.put(StudentController());
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +94,7 @@ class HomeDetailPage extends StatelessWidget {
                           ),
                           child: Center(
                             child: Text(
-                              'باحث ميداني ',
+                              oppertunityModel.oppertunityName!,
                               style: GoogleFonts.inter(
                                   fontSize: 18,
                                   fontWeight: FontWeight.normal,
@@ -89,19 +110,22 @@ class HomeDetailPage extends StatelessWidget {
                         ),
                         const SizedBox(height: 10),
                         Text(
-                          'التحقق من البيانات المقدمة و جمع بيانات حول احتياجات المستفيد و رصد جميع المتطلبات اللازمة',
+                          oppertunityModel.oppertunityDetail!,
+                          //  'التحقق من البيانات المقدمة و جمع بيانات حول احتياجات المستفيد و رصد جميع المتطلبات اللازمة',
                           style: GoogleFonts.inter(
                               color: Colors.black, fontSize: 14),
                         ),
                         const SizedBox(height: 10),
                         Text(
-                          '12 مارس - 30 مايو',
+                          '${formatDate(oppertunityModel.startTime!)} - ${formatDate(oppertunityModel.endTime!)}',
+
+                          // '12 مارس - 30 مايو',
                           style: GoogleFonts.inter(
                               color: ColorClass.darkGreenColor, fontSize: 16),
                         ),
                         const SizedBox(height: 10),
                         Text(
-                          '79 يوم',
+                          '${daysDifference(oppertunityModel.startTime!, oppertunityModel.endTime!)} يوم',
                           style: GoogleFonts.inter(
                               color: Colors.black, fontSize: 14),
                         ),
@@ -113,7 +137,7 @@ class HomeDetailPage extends StatelessWidget {
                         ),
                         const SizedBox(height: 10),
                         Text(
-                          '35 مقعد',
+                          oppertunityModel.totalSeats!,
                           style: GoogleFonts.inter(
                               color: Colors.black, fontSize: 14),
                         ),
@@ -125,36 +149,60 @@ class HomeDetailPage extends StatelessWidget {
                         ),
                         const SizedBox(height: 10),
                         Text(
-                          'اجتماعية',
+                          oppertunityModel.interest!,
                           style: GoogleFonts.inter(
                               color: Colors.black, fontSize: 14),
                         ),
+                        oppertunityModel.isExternal!
+                            ? Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const SizedBox(height: 10),
+                                  Text(
+                                    'مكان التطوع',
+                                    style: GoogleFonts.inter(
+                                        color: ColorClass.darkGreenColor,
+                                        fontSize: 16),
+                                  ),
+                                  const SizedBox(height: 10),
+                                  Text(
+                                    oppertunityModel.address!,
+                                    style: GoogleFonts.inter(
+                                        color: Colors.black, fontSize: 14),
+                                  ),
+                                  const SizedBox(height: 10),
+                                  Text(
+                                    'الموقع',
+                                    style: GoogleFonts.inter(
+                                        color: ColorClass.darkGreenColor,
+                                        fontSize: 16),
+                                  ),
+                                  const SizedBox(height: 10),
+                                  Text(
+                                    oppertunityModel.link!,
+                                    //  'https://maps.app.goo.gl/8KkdepLQwDdq8qfH9?g_st=iw',
+                                    style: GoogleFonts.inter(
+                                        color: Colors.black, fontSize: 14),
+                                  ),
+                                ],
+                              )
+                            : SizedBox(),
                         const SizedBox(height: 10),
+                        //عدد الساعات
                         Text(
-                          'مكان التطوع',
+                          'عدد الساعات',
                           style: GoogleFonts.inter(
-                              color: ColorClass.darkGreenColor, fontSize: 16),
+                              color: ColorClass.darkGreenColor, fontSize: 14),
                         ),
                         const SizedBox(height: 10),
-                        Text(
-                          'هيئة الاحصاء',
-                          style: GoogleFonts.inter(
-                              color: Colors.black, fontSize: 14),
-                        ),
                         const SizedBox(height: 10),
                         Text(
-                          'الموقع',
+                          oppertunityModel.noOfHours!,
                           style: GoogleFonts.inter(
-                              color: ColorClass.darkGreenColor, fontSize: 16),
+                              color: Colors.black, fontSize: 16),
                         ),
                         const SizedBox(height: 10),
-                        Text(
-                          'https://maps.app.goo.gl/8KkdepLQwDdq8qfH9?g_st=iw',
-                          textDirection: TextDirection.rtl,
-                          style: GoogleFonts.inter(
-                              color: Colors.black, fontSize: 14),
-                        ),
-                        const SizedBox(height: 10),
+
                         Text(
                           'الجنس',
                           style: GoogleFonts.inter(
@@ -162,7 +210,7 @@ class HomeDetailPage extends StatelessWidget {
                         ),
                         const SizedBox(height: 10),
                         Text(
-                          'ذكر',
+                          oppertunityModel.gender!,
                           style: GoogleFonts.inter(
                               color: Colors.black, fontSize: 16),
                         ),
@@ -174,32 +222,50 @@ class HomeDetailPage extends StatelessWidget {
                         ),
                         const SizedBox(height: 10),
                         Text(
-                          '-الثواب الاجر -\n-توثيق الساعات التطوعية  \n-المساهمة في خدمة المجتمع',
+                          oppertunityModel.benefits!,
+
+                          /// '-الثواب الاجر -\n-توثيق الساعات التطوعية  \n-المساهمة في خدمة المجتمع',
                           style: GoogleFonts.inter(
                               color: Colors.black, fontSize: 16),
                         ),
                         const SizedBox(height: 20),
-                        Align(
-                          alignment: Alignment.topLeft,
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Container(
-                              height: 35,
-                              width: 98,
-                              decoration: BoxDecoration(
-                                color: ColorClass.darkGreenColor,
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child: Center(
-                                child: Text(
-                                  'للتسجيل',
-                                  style: GoogleFonts.inter(
-                                      color: Colors.white, fontSize: 20),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
+                        GetX<StudentController>(
+                            init: Get.put(StudentController()),
+                            builder: (cont) {
+                              return cont.getoppertunityId
+                                      .contains(oppertunityModel.id!)
+                                  ? SizedBox()
+                                  : Align(
+                                      alignment: Alignment.topLeft,
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: GestureDetector(
+                                          onTap: () {
+                                            studentController
+                                                .registeredandCompletedOppertinity(
+                                                    oppertunityModel.id!);
+                                          },
+                                          child: Container(
+                                            height: 35,
+                                            width: 98,
+                                            decoration: BoxDecoration(
+                                              color: ColorClass.darkGreenColor,
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                            ),
+                                            child: Center(
+                                              child: Text(
+                                                'للتسجيل',
+                                                style: GoogleFonts.inter(
+                                                    color: Colors.white,
+                                                    fontSize: 20),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                            }),
                       ],
                     ),
                   ),

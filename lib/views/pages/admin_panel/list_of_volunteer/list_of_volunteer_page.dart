@@ -3,15 +3,28 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tatwei/constants/colors.dart';
+import 'package:tatwei/controllers/school_controller.dart';
+import 'package:tatwei/model/dymmy_oppertunity_model.dart';
 import 'package:tatwei/model/oppertunity_model.dart';
-import 'package:tatwei/views/pages/admin_panel/list_of_volunteer/add_oppertunity_page.dart';
 import 'package:tatwei/views/pages/admin_panel/list_of_volunteer/volunteer_data.dart';
+import 'package:tatwei/views/pages/coordinator_panel/teacher_home/oppertunity_detail_page.dart';
 import 'package:tatwei/views/pages/coordinator_panel/teacher_home/teacher_home_detail_page.dart';
-import 'package:tatwei/views/pages/coordinator_panel/teacher_home/teacher_home_page.dart';
 import 'package:tatwei/views/pages/student_panel/home/components/apply_filter_button.dart';
 
-class ListofVolunteerPage extends StatelessWidget {
+class ListofVolunteerPage extends StatefulWidget {
   const ListofVolunteerPage({super.key});
+
+  @override
+  State<ListofVolunteerPage> createState() => _ListofVolunteerPageState();
+}
+
+class _ListofVolunteerPageState extends State<ListofVolunteerPage> {
+  SchoolController schoolController = Get.put(SchoolController());
+  @override
+  void initState() {
+    schoolController.getschoolOppertunities();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -77,79 +90,180 @@ class ListofVolunteerPage extends StatelessWidget {
                 ],
               ),
               SizedBox(height: Get.height * 0.02),
+
               Expanded(
-                child: ListView.builder(
-                  itemCount: oppeertunityList.length,
-                  itemBuilder: (context, index) {
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 0, vertical: 8),
-                      child: GestureDetector(
-                        onTap: () {
-                          Get.to(() => const TeacherHomeDetailPage());
-                        },
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: ColorClass.primaryColor,
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Row(
-                            children: [
-                              Image.asset(oppeertunityList[index].image),
-                              Column(
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                child: GetX<SchoolController>(
+                    init: Get.put(SchoolController()),
+                    builder: (cont) {
+                      return ListView.builder(
+                        itemCount: cont.getschoolOpportunityListList.length,
+                        itemBuilder: (context, index) {
+                          OppertunityModel oppertunityModel =
+                              cont.getschoolOpportunityListList[index];
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 20, vertical: 8),
+                            child: GestureDetector(
+                              onTap: () {
+                                // Get.to(() => const TeacherHomeDetailPage());
+
+                                Get.to(() => TeacherOppertunityDetailPage(
+                                      oppertunityModel: oppertunityModel,
+                                    ));
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: ColorClass.primaryColor,
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: Row(
+                                  children: [
+                                    CircleAvatar(
+                                      backgroundImage: NetworkImage(
+                                          oppertunityModel.imageUrl!),
+                                    ),
+                                    // Image.network(oppertunityModel.imageUrl!),
+                                    Column(
                                       children: [
-                                        Container(
-                                          // width: Get.width * 0.6,
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 15, vertical: 0),
-                                          decoration: BoxDecoration(
-                                            color: ColorClass.darkGreenColor
-                                                .withOpacity(.5),
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                          ),
-                                          child: Text(
-                                            oppeertunityList[index].title,
-                                            style: GoogleFonts.inter(
-                                                fontSize: 18,
-                                                fontWeight: FontWeight.normal),
-                                          ),
-                                        ),
-                                        SizedBox(height: Get.height * 0.02),
-                                        SizedBox(
-                                          width: Get.width * 0.6,
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
                                             children: [
-                                              ApplyFilterButton(
-                                                  title: 'خدمية', onTap: () {}),
-                                              SizedBox(width: Get.width * 0.02),
-                                              ApplyFilterButton(
-                                                  title: 'داخلية',
-                                                  onTap: () {}),
+                                              Container(
+                                                // width: Get.width * 0.6,
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 15,
+                                                        vertical: 0),
+                                                decoration: BoxDecoration(
+                                                  color: ColorClass
+                                                      .darkGreenColor
+                                                      .withOpacity(.5),
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                ),
+                                                child: Center(
+                                                  child: Text(
+                                                    oppertunityModel
+                                                        .oppertunityName!,
+                                                    style: GoogleFonts.inter(
+                                                        fontSize: 18,
+                                                        fontWeight:
+                                                            FontWeight.normal),
+                                                  ),
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                  height: Get.height * 0.02),
+                                              SizedBox(
+                                                width: Get.width * 0.6,
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.start,
+                                                  children: [
+                                                    ApplyFilterButton(
+                                                        title: oppertunityModel
+                                                            .interest!,
+                                                        onTap: () {}),
+                                                    SizedBox(
+                                                        width:
+                                                            Get.width * 0.02),
+                                                    ApplyFilterButton(
+                                                        title: 'داخلية',
+                                                        onTap: () {}),
+                                                  ],
+                                                ),
+                                              ),
                                             ],
                                           ),
                                         ),
                                       ],
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    );
-                  },
-                ),
+                            ),
+                          );
+                        },
+                      );
+                    }),
               ),
+
+              // Expanded(
+              //   child: ListView.builder(
+              //     itemCount: oppeertunityList.length,
+              //     itemBuilder: (context, index) {
+              //       return Padding(
+              //         padding: const EdgeInsets.symmetric(
+              //             horizontal: 0, vertical: 8),
+              //         child: GestureDetector(
+              //           onTap: () {
+              //             Get.to(() => const TeacherHomeDetailPage());
+              //           },
+              //           child: Container(
+              //             decoration: BoxDecoration(
+              //               color: ColorClass.primaryColor,
+              //               borderRadius: BorderRadius.circular(10),
+              //             ),
+              //             child: Row(
+              //               children: [
+              //                 Image.asset(oppeertunityList[index].image),
+              //                 Column(
+              //                   children: [
+              //                     Padding(
+              //                       padding: const EdgeInsets.all(8.0),
+              //                       child: Column(
+              //                         crossAxisAlignment:
+              //                             CrossAxisAlignment.start,
+              //                         children: [
+              //                           Container(
+              //                             // width: Get.width * 0.6,
+              //                             padding: const EdgeInsets.symmetric(
+              //                                 horizontal: 15, vertical: 0),
+              //                             decoration: BoxDecoration(
+              //                               color: ColorClass.darkGreenColor
+              //                                   .withOpacity(.5),
+              //                               borderRadius:
+              //                                   BorderRadius.circular(10),
+              //                             ),
+              //                             child: Text(
+              //                               oppeertunityList[index].title,
+              //                               style: GoogleFonts.inter(
+              //                                   fontSize: 18,
+              //                                   fontWeight: FontWeight.normal),
+              //                             ),
+              //                           ),
+              //                           SizedBox(height: Get.height * 0.02),
+              //                           SizedBox(
+              //                             width: Get.width * 0.6,
+              //                             child: Row(
+              //                               mainAxisAlignment:
+              //                                   MainAxisAlignment.start,
+              //                               children: [
+              //                                 ApplyFilterButton(
+              //                                     title: 'خدمية', onTap: () {}),
+              //                                 SizedBox(width: Get.width * 0.02),
+              //                                 ApplyFilterButton(
+              //                                     title: 'داخلية',
+              //                                     onTap: () {}),
+              //                               ],
+              //                             ),
+              //                           ),
+              //                         ],
+              //                       ),
+              //                     ),
+              //                   ],
+              //                 ),
+              //               ],
+              //             ),
+              //           ),
+              //         ),
+              //       );
+              //     },
+              //   ),
+              // ),
             ],
           ),
         ),

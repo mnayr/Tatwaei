@@ -186,7 +186,7 @@ class AdminHomeDetailPage extends StatelessWidget {
                             padding: const EdgeInsets.all(8.0),
                             child: GestureDetector(
                               onTap: () {
-                                Get.to(() => const AdminEditHomeDetailPage());
+                                //Get.to(() => const AdminEditHomeDetailPage());
                               },
                               child: Container(
                                 height: 35,

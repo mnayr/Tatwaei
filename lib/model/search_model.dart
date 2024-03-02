@@ -20,13 +20,13 @@ class SearchModelAlMakaan {
   bool checkValue;
   SearchModelAlMakaan({
     required this.title,
-    this.checkValue = false,
+    required this.checkValue,
   });
 }
 
 List<SearchModelAlMakaan> almakaanList = [
-  SearchModelAlMakaan(title: 'داخل المدرسة'),
-  SearchModelAlMakaan(title: 'خارج المدرسة'),
+  SearchModelAlMakaan(title: 'داخل المدرسة', checkValue: true),
+  SearchModelAlMakaan(title: 'خارج المدرسة', checkValue: false),
 ];
 
 class SearchModelAlJins {
@@ -34,11 +34,11 @@ class SearchModelAlJins {
   bool checkValue;
   SearchModelAlJins({
     required this.title,
-    this.checkValue = false,
+    required this.checkValue,
   });
 }
 
 List<SearchModelAlJins> aljinsList = [
-  SearchModelAlJins(title: 'ذكر'),
-  SearchModelAlJins(title: 'انثى'),
+  SearchModelAlJins(title: 'ذكر', checkValue: true),
+  SearchModelAlJins(title: 'انثى', checkValue: false),
 ];

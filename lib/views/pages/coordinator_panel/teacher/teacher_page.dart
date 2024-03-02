@@ -4,13 +4,26 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tatwei/constants/colors.dart';
 import 'package:tatwei/constants/font_style.dart';
-import 'package:tatwei/model/hours_model.dart';
-import 'package:tatwei/model/request_model.dart';
+import 'package:tatwei/controllers/school_controller.dart';
+import 'package:tatwei/model/student_model.dart';
 import 'package:tatwei/views/pages/coordinator_panel/teacher/student_detail.dart';
-import 'package:tatwei/views/pages/student_panel/saati/saati_page.dart';
 
-class TeacherPage extends StatelessWidget {
+class TeacherPage extends StatefulWidget {
   const TeacherPage({super.key});
+
+  @override
+  State<TeacherPage> createState() => _TeacherPageState();
+}
+
+class _TeacherPageState extends State<TeacherPage> {
+  SchoolController schoolController = Get.put(SchoolController());
+
+  @override
+  void initState() {
+    schoolController.getVerifiedStudents();
+    // TODO: implement initState
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,98 +64,120 @@ class TeacherPage extends StatelessWidget {
                   child: SvgPicture.asset('assets/icons/back_arrow.svg')),
               SizedBox(height: Get.height * 0.02),
               Expanded(
-                child: ListView.builder(
-                  itemCount: hoursList.length,
-                  itemBuilder: (context, index) {
-                    return Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: GestureDetector(
-                        onTap: () => Get.to(() => TeacherStudentDetailPage(
-                              studData: hoursList[index],
-                            )),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: ColorClass.primaryColor,
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Column(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
+                child: GetX<SchoolController>(
+                    init: schoolController,
+                    builder: (cont) {
+                      return ListView.builder(
+                        itemCount: cont.getverifiedStudentsList.length,
+                        itemBuilder: (context, index) {
+                          StudentModel studentModel =
+                              cont.getverifiedStudentsList[index];
+                          return Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: GestureDetector(
+                              onTap: () =>
+                                  Get.to(() => TeacherStudentDetailPage(
+                                        studentModel: studentModel,
+                                        // studData: hoursList[index],
+                                      )),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: ColorClass.primaryColor,
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
                                 child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Container(
-                                          // width: Get.width * 0.6,
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 15, vertical: 0),
-                                          decoration: BoxDecoration(
-                                            color: ColorClass.darkGreenColor
-                                                .withOpacity(.5),
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                          ),
-                                          child: Center(
-                                            child: Text(
-                                              hoursList[index].name,
-                                              style: GoogleFonts.inter(
-                                                  fontSize: 18,
-                                                  fontWeight:
-                                                      FontWeight.normal),
-                                            ),
-                                          ),
-                                        ),
-                                        Container(
-                                          // width: Get.width * 0.6,
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 15, vertical: 0),
-                                          decoration: BoxDecoration(
-                                            color: ColorClass.darkGreenColor
-                                                .withOpacity(.5),
-                                            borderRadius:
-                                                BorderRadius.circular(40),
-                                          ),
-                                          child: Center(
-                                            child: Text(
-                                              hoursList[index].hour,
-                                              style: GoogleFonts.inter(
-                                                  fontSize: 18,
-                                                  fontWeight:
-                                                      FontWeight.normal),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    SizedBox(height: Get.height * 0.02),
-                                    SizedBox(
-                                      width: Get.width,
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
-                                          Container(
-                                            // width: Get.width * 0.6,
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 15, vertical: 0),
-                                            decoration: BoxDecoration(
-                                              color: ColorClass.darkGreenColor
-                                                  .withOpacity(.5),
-                                              borderRadius:
-                                                  BorderRadius.circular(20),
-                                            ),
-                                            child: Center(
-                                              child: Text(
-                                                hoursList[index].id,
-                                                style: GoogleFonts.inter(
-                                                    fontSize: 18,
-                                                    fontWeight:
-                                                        FontWeight.normal),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Container(
+                                                // width: Get.width * 0.6,
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 15,
+                                                        vertical: 0),
+                                                decoration: BoxDecoration(
+                                                  color: ColorClass
+                                                      .darkGreenColor
+                                                      .withOpacity(.5),
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                ),
+                                                child: Center(
+                                                  child: Text(
+                                                    studentModel.studenName!,
+                                                    style: GoogleFonts.inter(
+                                                        fontSize: 18,
+                                                        fontWeight:
+                                                            FontWeight.normal),
+                                                  ),
+                                                ),
                                               ),
+                                              Container(
+                                                // width: Get.width * 0.6,
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 15,
+                                                        vertical: 0),
+                                                decoration: BoxDecoration(
+                                                  color: ColorClass
+                                                      .darkGreenColor
+                                                      .withOpacity(.5),
+                                                  borderRadius:
+                                                      BorderRadius.circular(40),
+                                                ),
+                                                child: Center(
+                                                  child: Text(
+                                                    '${studentModel.totalHours} ساعه',
+                                                    style: GoogleFonts.inter(
+                                                        fontSize: 18,
+                                                        fontWeight:
+                                                            FontWeight.normal),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          SizedBox(height: Get.height * 0.02),
+                                          SizedBox(
+                                            width: Get.width,
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Container(
+                                                  // width: Get.width * 0.6,
+                                                  padding: const EdgeInsets
+                                                      .symmetric(
+                                                      horizontal: 15,
+                                                      vertical: 0),
+                                                  decoration: BoxDecoration(
+                                                    color: ColorClass
+                                                        .darkGreenColor
+                                                        .withOpacity(.5),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            20),
+                                                  ),
+                                                  child: Center(
+                                                    child: Text(
+                                                      studentModel.studentId!,
+                                                      style: GoogleFonts.inter(
+                                                          fontSize: 18,
+                                                          fontWeight: FontWeight
+                                                              .normal),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
                                             ),
                                           ),
                                         ],
@@ -151,13 +186,11 @@ class TeacherPage extends StatelessWidget {
                                   ],
                                 ),
                               ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    );
-                  },
-                ),
+                            ),
+                          );
+                        },
+                      );
+                    }),
               ),
             ],
           ),
